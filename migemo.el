@@ -50,7 +50,7 @@
   :group 'migemo
   :type '(repeat string))
 
-(defcustom migemo-white-space-regexp "[ ¡¡\t\r\n]*"
+(defcustom migemo-white-space-regexp "[ ã€€\t\r\n]*"
   "*Regexp representing white spaces."
   :group 'migemo
   :type 'string)
@@ -221,14 +221,14 @@
 	   (eq (process-status migemo-process) 'run))
       (let ((options
 	     (delq nil
-		   (append migemo-options
-			   (when (and migemo-user-dictionary
+		   (append (when (and migemo-user-dictionary
 				      (file-exists-p migemo-user-dictionary))
 			     (list "-u" migemo-user-dictionary))
 			   (when (and migemo-regex-dictionary
 				      (file-exists-p migemo-regex-dictionary))
 			     (list "-r" migemo-regex-dictionary))
-			   (list "-d" migemo-dictionary)))))
+			   (list "-d" migemo-dictionary)
+                           migemo-options))))
 	(setq migemo-buffer (get-buffer-create " *migemo*"))
 	(setq migemo-process (migemo-start-process
 			      "migemo" migemo-buffer migemo-command options))
@@ -503,7 +503,7 @@ into the migemo's regexp pattern."
 			(if migemo-emacs21p
 			    (put-text-property 0 (length str)
 					       'face migemo-dabbrev-ol-face str)
-			  (setq str (concat "¡Ú" str "¡Û")))
+			  (setq str (concat "ã€" str "ã€‘")))
 			(message "(%d): %s%s%s"
 				 (count-lines (point-min) matched-start)
 				 (buffer-substring-no-properties lstart matched-start)
@@ -786,10 +786,10 @@ into the migemo's regexp pattern."
 (provide 'migemo)
 
 ;; sample
-;; 0123 abcd ABCD ¤Ò¤é¤¬¤Ê ¥«¥¿¥«¥Ê ´Á»ú !"[#\$]%^&_':`(;)<*=+>,?-@./{|}~
+;; 0123 abcd ABCD ã²ã‚‰ãŒãª ã‚«ã‚¿ã‚«ãƒŠ æ¼¢å­— !"[#\$]%^&_':`(;)<*=+>,?-@./{|}~
 
 ;; Local Variables:
-;; coding: euc-japan-unix
+;; coding: utf-8
 ;; indent-tabs-mode: nil
 ;; End:
 
